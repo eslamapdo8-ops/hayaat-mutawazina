@@ -1,0 +1,21 @@
+# Node.js dependencies
+/node_modules/
+
+# Python dependencies
+__pycache__/
+*.py[cod]
+env/
+venv/
+.env
+
+# IDE files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
