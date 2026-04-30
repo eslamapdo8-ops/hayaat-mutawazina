@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الحياة المتوازنة — كتاب الملصقات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --deep-purple:#4A1D6E;--soft-purple:#8B5CF6;--light-purple:#D8B4FE;
+  --pale-lavender:#F3E8FF;--gold-primary:#D4A843;--gold-light:#F5E6B8;
+  --gold-glow:#FFE484;--bg-cream:#FFFAF5;--text-dark:#2D1B3E;
+  --text-gray:#6B5B7B;--card-bg:#FFFFFF;--border-soft:#E8DFF0;
+}
+body{
+  font-family:'Tajawal',sans-serif;
+  background:linear-gradient(135deg,#F3E8FF 0%,#FFFAF5 50%,#FFF5F0 100%);
+  min-height:100vh;padding:20px;color:var(--text-dark);direction:rtl;
+}
+.page-wrap{
+  max-width:900px;margin:0 auto;
+  box-shadow:0 20px 60px rgba(74,29,110,0.12);border-radius:16px;overflow:hidden;
+  background:linear-gradient(135deg,var(--deep-purple),var(--soft-purple));padding:3px;
+}
+.page{
+  background:var(--card-bg);padding:28px 24px;border-radius:14px;
+}
+.page h2{
+  font-size:22px;font-weight:800;color:var(--deep-purple);text-align:center;
+  margin-bottom:4px;
+}
+.subtitle{
+  text-align:center;color:var(--text-gray);font-size:14px;
+  margin-bottom:20px;
+}
+/* STICKER GRID */
+.sticker-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
+  gap:12px;
+}
+/* STICKER */
+.sticker{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;padding:12px 8px;border-radius:12px;cursor:pointer;
+  border:2px solid var(--border-soft);background:white;
+  transition:all .25s;user-select:none;
+  min-height:90px;
+}
+.sticker:hover{
+  transform:translateY(-4px);box-shadow:0 8px 24px rgba(74,29,110,.15);
+}
+.sticker:active{transform:scale(0.95)}
+.sticker-icon{font-size:32px;line-height:1}
+.sticker-label{
+  font-size:12px;color:var(--text-dark);font-weight:500;text-align:center;
+  line-height:1.3;
+}
+/* Sticker variants */
+.sticker-gold{
+  background:linear-gradient(135deg,#FFFBEB,#FFF8E7);
+  border-color:var(--gold-light);
+}
+.sticker-purple{
+  background:linear-gradient(135deg,var(--pale-lavender),#FDFBFF);
+  border-color:var(--light-purple);
+}
+.sticker-rose{
+  background:linear-gradient(135deg,#FFF0F5,#FFF5F0);
+  border-color:#F0C8D8;
+}
+.sticker-mint{
+  background:linear-gradient(135deg,#F0FFF4,#F5FFF0);
+  border-color:#B8E0C8;
+}
+.sticker-sky{
+  background:linear-gradient(135deg,#F0F8FF,#F0F4FF);
+  border-color:#B8D0E8;
+}
+/* Selected state for copying */
+.sticker.selected{
+  border-color:var(--gold-primary);box-shadow:0 0 0 3px var(--gold-light);
+}
+/* SECTION TITLE */
+.section-title{
+  font-size:15px;font-weight:700;color:var(--deep-purple);
+  margin:20px 0 10px;padding-right:4px;
+  border-right:3px solid var(--gold-primary);padding-right:10px;
+}
+.section-title:first-of-type{margin-top:0}
+/* TOAST */
+.toast{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:var(--deep-purple);color:white;padding:10px 24px;border-radius:10px;
+  font-size:14px;opacity:0;transition:all .4s;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* FOOTER */
+.footer-actions{display:flex;gap:8px;justify-content:center;padding:16px 0 0;margin-top:16px;border-top:1.5px solid var(--border-soft)}
+.btn{
+  font-family:'Tajawal',sans-serif;padding:8px 20px;border:none;border-radius:8px;
+  cursor:pointer;font-size:13px;font-weight:500;transition:all .25s;
+}
+.btn-primary{background:linear-gradient(135deg,var(--deep-purple),var(--soft-purple));color:white}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(74,29,110,.3)}
+.btn-outline{background:white;color:var(--deep-purple);border:1.5px solid var(--border-soft)}
+.btn-outline:hover{border-color:var(--soft-purple);background:var(--pale-lavender)}
+/* PRINT */
+@media print{
+  @page{size:A4 portrait;margin:8mm}
+  body{background:white;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page-wrap{box-shadow:none;padding:1px;border-radius:0;max-width:100%}
+  .page{padding:16px;border-radius:0}
+  .sticker{border:1.5px solid #CCC!important;break-inside:avoid}
+  .sticker:hover{transform:none;box-shadow:none}
+  .sticker-gold{border-color:var(--gold-light)!important}
+  .sticker-purple{border-color:var(--light-purple)!important}
+  .sticker-rose{border-color:#F0C8D8!important}
+  .sticker-mint{border-color:#B8E0C8!important}
+  .sticker-sky{border-color:#B8D0E8!important}
+  .btn,.toast{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+<div class="page">
+
+  <h2>📔 كتاب الملصقات</h2>
+  <p class="subtitle">Sticker Book — للحياة المتوازنة 🌸</p>
+  <p style="font-size:13px;color:var(--text-gray);text-align:center;margin-top:-14px;margin-bottom:16px;">
+    انقري على الملصق لنسخه — ثم الصقيه في GoodNotes / Notability
+  </p>
+
+  <!-- SECTION 1: TASK & PRIORITY -->
+  <div class="section-title">📌 أيقونات المهام والأولويات</div>
+  <div class="sticker-grid" id="grid-tasks"></div>
+
+  <!-- SECTION 2: MOOD & FEELINGS -->
+  <div class="section-title">😊 المشاعر والحالة</div>
+  <div class="sticker-grid" id="grid-mood"></div>
+
+  <!-- SECTION 3: BUSINESS -->
+  <div class="section-title">💼 أيقونات الأعمال والمال</div>
+  <div class="sticker-grid" id="grid-business"></div>
+
+  <!-- SECTION 4: HIJRI / EVENTS -->
+  <div class="section-title">🌙 التقويم الهجري والمناسبات</div>
+  <div class="sticker-grid" id="grid-hijri"></div>
+
+  <!-- SECTION 5: DECORATIVE -->
+  <div class="section-title">🎀 ملصقات تزيينية</div>
+  <div class="sticker-grid" id="grid-decor"></div>
+
+  <div class="footer-actions">
+    <button class="btn btn-outline" onclick="window.print()">🖨️ طباعة / PDF</button>
+  </div>
+</div></div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// ===== STICKER DEFINITIONS =====
+const STICKERS = {
+  tasks: [
+    {icon:'⭐', label:'أولوية كبرى', cls:'sticker-gold'},
+    {icon:'🔥', label:'عاجل جداً', cls:'sticker-rose'},
+    {icon:'⏰', label:'موعد نهائي', cls:'sticker-rose'},
+    {icon:'📞', label:'اتصال', cls:'sticker-sky'},
+    {icon:'📧', label:'بريد إلكتروني', cls:'sticker-sky'},
+    {icon:'📍', label:'اجتماع', cls:'sticker-purple'},
+    {icon:'💡', label:'فكرة جديدة', cls:'sticker-gold'},
+    {icon:'✅', label:'مهمة مكتملة', cls:'sticker-mint'},
+    {icon:'🔁', label:'متابعة', cls:'sticker-sky'},
+    {icon:'📝', label:'ملاحظة', cls:'sticker-purple'},
+  ],
+  mood: [
+    {icon:'😊', label:'يوم سعيد', cls:'sticker-gold'},
+    {icon:'😢', label:'يوم صعب', cls:'sticker-rose'},
+    {icon:'⚡', label:'منتعشة', cls:'sticker-mint'},
+    {icon:'😴', label:'متعبة', cls:'sticker-purple'},
+    {icon:'🌟', label:'إنجاز كبير', cls:'sticker-gold'},
+    {icon:'🎉', label:'احتفال', cls:'sticker-rose'},
+    {icon:'🧘', label:'استرخاء', cls:'sticker-sky'},
+    {icon:'💪', label:'قوية اليوم', cls:'sticker-mint'},
+    {icon:'🤗', label:'ممتنة', cls:'sticker-purple'},
+    {icon:'🎯', label:'مركزة', cls:'sticker-gold'},
+  ],
+  business: [
+    {icon:'💰', label:'دخل', cls:'sticker-mint'},
+    {icon:'📉', label:'مصروف', cls:'sticker-rose'},
+    {icon:'📈', label:'أرباح', cls:'sticker-gold'},
+    {icon:'🏢', label:'اجتماع عمل', cls:'sticker-purple'},
+    {icon:'🤝', label:'شراكة', cls:'sticker-sky'},
+    {icon:'🎯', label:'هدف عمل', cls:'sticker-gold'},
+    {icon:'📊', label:'تقرير', cls:'sticker-purple'},
+    {icon:'🏆', label:'إنجاز', cls:'sticker-gold'},
+    {icon:'🚀', label:'انطلاقة جديدة', cls:'sticker-mint'},
+    {icon:'📋', label:'قائمة مهام', cls:'sticker-sky'},
+  ],
+  hijri: [
+    {icon:'🌙', label:'رمضان', cls:'sticker-gold'},
+    {icon:'🕌', label:'عيد', cls:'sticker-purple'},
+    {icon:'🤲', label:'وقفة عرفة', cls:'sticker-rose'},
+    {icon:'📖', label:'محرم', cls:'sticker-sky'},
+    {icon:'🌸', label:'ربيع الأول', cls:'sticker-mint'},
+    {icon:'🕋', label:'حج', cls:'sticker-purple'},
+    {icon:'🕯️', label:'ليلة القدر', cls:'sticker-gold'},
+    {icon:'🎊', label:'مولود', cls:'sticker-rose'},
+    {icon:'🎓', label:'تخرج', cls:'sticker-sky'},
+    {icon:'🏡', label:'منزل جديد', cls:'sticker-mint'},
+  ],
+  decor: [
+    {icon:'─── ✦ ───', label:'فاصل تزييني', cls:'sticker-purple', big:true},
+    {icon:'✦ ✦ ✦', label:'نجوم', cls:'sticker-gold', big:true},
+    {icon:'▬▬▬▬▬▬', label:'خط فاصل', cls:'sticker-rose', big:true},
+    {icon:'「 」', label:'قوس تزييني', cls:'sticker-sky', big:true},
+    {icon:'◈ ◈ ◈', label:'ماسة', cls:'sticker-mint', big:true},
+    {icon:'→ ←', label:'سهمين', cls:'sticker-purple', big:true},
+    {icon:'• • •', label:'نقاط', cls:'sticker-gold', big:true},
+  ]
+};
+
+// ===== RENDER =====
+function renderGrid(gridId, items){
+  const grid = document.getElementById(gridId);
+  grid.innerHTML = '';
+  items.forEach(item => {
+    const div = document.createElement('div');
+    div.className = `sticker ${item.cls || ''}`;
+    div.innerHTML = `
+      <div class="sticker-icon">${item.icon}</div>
+      <div class="sticker-label">${item.label}</div>
+    `;
+    div.addEventListener('click', function(e){
+      e.stopPropagation();
+      // Select this sticker visually
+      document.querySelectorAll('.sticker').forEach(s => s.classList.remove('selected'));
+      this.classList.add('selected');
+      // Copy to clipboard
+      const text = `${item.icon} ${item.label}`;
+      navigator.clipboard.writeText(text).then(()=>{
+        showToast(`📋 تم نسخ "${text}"`);
+      }).catch(()=>{
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast(`📋 تم نسخ "${text}"`);
+      });
+    });
+    grid.appendChild(div);
+  });
+}
+
+// Render all sections
+renderGrid('grid-tasks', STICKERS.tasks);
+renderGrid('grid-mood', STICKERS.mood);
+renderGrid('grid-business', STICKERS.business);
+renderGrid('grid-hijri', STICKERS.hijri);
+renderGrid('grid-decor', STICKERS.decor);
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// Click anywhere to deselect
+document.addEventListener('click', (e)=>{
+  if(!e.target.closest('.sticker')){
+    document.querySelectorAll('.sticker').forEach(s => s.classList.remove('selected'));
+  }
+});
+</script>
+</body>
+</html>

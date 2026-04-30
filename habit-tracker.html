@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الحياة المتوازنة — متعقب العادات الشهري</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --deep-purple:#4A1D6E;--soft-purple:#8B5CF6;--light-purple:#D8B4FE;
+  --pale-lavender:#F3E8FF;--gold-primary:#D4A843;--gold-light:#F5E6B8;
+  --bg-cream:#FFFAF5;--text-dark:#2D1B3E;--text-gray:#6B5B7B;
+  --card-bg:#FFFFFF;--border-soft:#E8DFF0;--success-green:#22C55E;
+  --cell-checked:#D4EDDA;--cell-border:#D8D0E8;
+}
+body{
+  font-family:'Tajawal',sans-serif;
+  background:linear-gradient(135deg,#F3E8FF 0%,#FFFAF5 50%,#FFF5F0 100%);
+  min-height:100vh;padding:20px;color:var(--text-dark);direction:rtl;
+}
+.page-wrap{
+  max-width:900px;margin:0 auto;
+  box-shadow:0 20px 60px rgba(74,29,110,0.12);border-radius:16px;overflow:hidden;
+  background:linear-gradient(135deg,var(--deep-purple),var(--soft-purple));padding:3px;
+}
+.page{
+  background:var(--card-bg);padding:24px 20px;border-radius:14px;
+  display:flex;flex-direction:column;gap:14px;
+}
+/* HEADER */
+.month-header{
+  background:linear-gradient(135deg,var(--pale-lavender),#FFF0F5);
+  border:1.5px solid var(--border-soft);border-radius:12px;padding:14px 18px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;
+}
+.month-header h2{font-size:20px;font-weight:800;color:var(--deep-purple)}
+.month-fields{display:flex;gap:8px;flex-wrap:wrap}
+.month-field{
+  display:flex;align-items:center;gap:4px;
+  background:white;border:1.5px solid var(--border-soft);border-radius:8px;padding:4px 10px;font-size:13px;
+}
+.month-field .ico{font-size:15px}
+.month-field input{
+  border:none;outline:none;font-family:'Tajawal',sans-serif;font-size:13px;
+  width:100px;background:transparent;color:var(--text-dark);
+}
+.days-control{display:flex;align-items:center;gap:6px;font-size:13px}
+.days-control select{
+  font-family:'Tajawal',sans-serif;padding:4px 8px;border:1.5px solid var(--border-soft);
+  border-radius:6px;background:white;font-size:13px;cursor:pointer;
+}
+/* STATS */
+.stat-bar{
+  display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--text-gray);
+  background:var(--pale-lavender);border-radius:8px;padding:8px 14px;
+}
+.stat-item{display:flex;align-items:center;gap:4px}
+.stat-item strong{color:var(--deep-purple);font-size:16px}
+/* TABLE */
+.table-wrap{overflow-x:auto}
+.habit-table{
+  width:100%;border-collapse:collapse;font-size:12px;direction:rtl;
+}
+.habit-table th{
+  background:linear-gradient(180deg,var(--deep-purple),var(--soft-purple));
+  color:white;padding:6px 4px;font-weight:500;text-align:center;
+  border:1px solid rgba(255,255,255,0.15);
+  white-space:nowrap;
+}
+.habit-table th:first-child{text-align:right;padding-right:10px;min-width:130px}
+.habit-table td{
+  border:1px solid var(--cell-border);text-align:center;padding:2px;
+  vertical-align:middle;
+}
+.habit-table tr:nth-child(even) td{background:#FDFBFF}
+/* Habit name cell */
+.habit-name-cell{
+  display:flex;align-items:center;gap:4px;padding:4px;
+}
+.habit-name-cell input[type="text"]{
+  border:none;border-bottom:1.5px dashed var(--border-soft);outline:none;
+  font-family:'Tajawal',sans-serif;font-size:13px;width:110px;background:transparent;color:var(--text-dark);
+}
+.habit-emoji{font-size:18px}
+/* Day checkboxes */
+.day-cell{position:relative;width:28px;height:28px}
+.day-cell .cb-wrap{margin:0 auto}
+.day-cell .cb-box{width:20px;height:20px;border-radius:4px;border-color:#D0C8DC}
+.day-cell .cb-wrap input:checked+.cb-box{background:var(--success-green);border-color:var(--success-green)}
+/* Scrollable */
+.scroll-x{overflow-x:auto;padding-bottom:4px}
+/* FOOTER */
+.footer-actions{display:flex;gap:8px;justify-content:center;padding:6px 0 0}
+.btn{
+  font-family:'Tajawal',sans-serif;padding:8px 20px;border:none;border-radius:8px;
+  cursor:pointer;font-size:13px;font-weight:500;transition:all .25s;
+}
+.btn-primary{background:linear-gradient(135deg,var(--deep-purple),var(--soft-purple));color:white}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(74,29,110,.3)}
+.btn-outline{background:white;color:var(--deep-purple);border:1.5px solid var(--border-soft)}
+.btn-outline:hover{border-color:var(--soft-purple);background:var(--pale-lavender)}
+.toast{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:var(--deep-purple);color:white;padding:10px 24px;border-radius:10px;
+  font-size:14px;opacity:0;transition:all .4s;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* PRINT */
+@media print{
+  @page{size:A4 landscape;margin:8mm}
+  body{background:white;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page-wrap{box-shadow:none;padding:1px;border-radius:0;max-width:100%}
+  .page{padding:12px;border-radius:0}
+  .btn,.toast{display:none}
+  .day-cell .cb-wrap input:checked+.cb-box{background:var(--success-green)!important;border-color:var(--success-green)!important}
+  .habit-table th{background:var(--deep-purple)!important;color:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+<div class="page">
+
+  <div class="month-header">
+    <h2>📊 متعقب العادات الشهري</h2>
+    <div class="month-fields">
+      <div class="month-field"><span class="ico">📆</span><input type="text" id="month-greg" placeholder="الشهر ميلادي"></div>
+      <div class="month-field"><span class="ico">🌙</span><input type="text" id="month-hijri" placeholder="الشهر هجري"></div>
+    </div>
+    <div class="days-control">
+      <span>عدد أيام الشهر:</span>
+      <select id="day-count" onchange="rebuildTable()">
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30" selected>30</option>
+        <option value="31">31</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stat-bar" id="stat-bar">
+    <div class="stat-item">✅ تم اليوم: <strong id="stat-today">0</strong></div>
+    <div class="stat-item">📊 نسبة الإنجاز: <strong id="stat-pct">0%</strong></div>
+    <div class="stat-item">🔥 أقوى عادة: <strong id="stat-best">—</strong></div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table class="habit-table" id="habit-table"></table>
+  </div>
+
+  <div class="footer-actions">
+    <button class="btn btn-primary" onclick="saveData()">💾 حفظ</button>
+    <button class="btn btn-outline" onclick="clearAll()">🔄 تفريغ</button>
+    <button class="btn btn-outline" onclick="window.print()">🖨️ طباعة/PDF</button>
+  </div>
+</div></div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const STORAGE_KEY = 'hayaat_habit_tracker';
+const DEFAULT_HABITS = [
+  {emoji:'🧘', name:'رياضة / تمارين'},
+  {emoji:'📖', name:'قراءة'},
+  {emoji:'💧', name:'8 أكواب ماء'},
+  {emoji:'🥗', name:'أكل صحي'},
+  {emoji:'🕌', name:'صلاة الفجر'},
+  {emoji:'📝', name:'تخطيط اليوم'}
+];
+
+let state = { habits: [], days: 30 };
+
+function initState(){
+  state.habits = DEFAULT_HABITS.map(h=>({...h}));
+  state.days = 30;
+}
+initState();
+
+function rebuildTable(){
+  const days = parseInt(document.getElementById('day-count').value) || 30;
+  state.days = days;
+  const tbl = document.getElementById('habit-table');
+  tbl.innerHTML = '';
+
+  // THEAD
+  const thead = document.createElement('thead');
+  const tr = document.createElement('tr');
+  const th0 = document.createElement('th');
+  th0.textContent = '🧬 العادة';
+  tr.appendChild(th0);
+
+  for(let d=1; d<=days; d++){
+    const th = document.createElement('th');
+    th.textContent = d;
+    tr.appendChild(th);
+  }
+  thead.appendChild(tr);
+  tbl.appendChild(thead);
+
+  // TBODY
+  const tbody = document.createElement('tbody');
+  state.habits.forEach((habit, hi) => {
+    const row = document.createElement('tr');
+
+    // Habit name cell
+    const tdName = document.createElement('td');
+    tdName.innerHTML = `
+      <div class="habit-name-cell">
+        <span class="habit-emoji">${habit.emoji}</span>
+        <input type="text" class="habit-name-input" data-habit="${hi}" value="${habit.name}" placeholder="اسم العادة">
+      </div>
+    `;
+    row.appendChild(tdName);
+
+    // Day cells
+    for(let d=0; d<days; d++){
+      const td = document.createElement('td');
+      td.innerHTML = `
+        <div class="day-cell">
+          <label class="cb-wrap">
+            <input type="checkbox" class="habit-cb" data-habit="${hi}" data-day="${d}">
+            <span class="cb-box"></span>
+          </label>
+        </div>
+      `;
+      row.appendChild(td);
+    }
+
+    tbody.appendChild(row);
+  });
+  tbl.appendChild(tbody);
+
+  // Restore saved states
+  loadCheckboxes();
+  attachListeners();
+  updateStats();
+}
+
+function loadCheckboxes(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    const saved = JSON.parse(raw);
+    if(saved.habits) state.habits = saved.habits;
+    if(saved.days) state.days = saved.days;
+    if(saved.checks){
+      document.querySelectorAll('.habit-cb').forEach(cb => {
+        const h = parseInt(cb.dataset.habit);
+        const d = parseInt(cb.dataset.day);
+        const key = `${h}_${d}`;
+        cb.checked = !!saved.checks[key];
+      });
+    }
+    // Restore habit names
+    document.querySelectorAll('.habit-name-input').forEach(inp => {
+      const hi = parseInt(inp.dataset.habit);
+      if(state.habits[hi]) inp.value = state.habits[hi].name;
+    });
+  }catch(e){}
+}
+
+function attachListeners(){
+  document.querySelectorAll('.habit-cb').forEach(cb => {
+    cb.addEventListener('change', ()=>{
+      autoSave();
+      updateStats();
+    });
+  });
+  document.querySelectorAll('.habit-name-input').forEach(inp => {
+    inp.addEventListener('input', ()=>{
+      const hi = parseInt(inp.dataset.habit);
+      if(state.habits[hi]) state.habits[hi].name = inp.value;
+      autoSave();
+    });
+  });
+}
+
+function gatherCheckData(){
+  const checks = {};
+  document.querySelectorAll('.habit-cb').forEach(cb => {
+    const h = parseInt(cb.dataset.habit);
+    const d = parseInt(cb.dataset.day);
+    checks[`${h}_${d}`] = cb.checked;
+  });
+  return checks;
+}
+
+function gatherHabitNames(){
+  const habits = [];
+  document.querySelectorAll('.habit-name-input').forEach(inp => {
+    const hi = parseInt(inp.dataset.habit);
+    habits.push({emoji: state.habits[hi]?.emoji || '📌', name: inp.value});
+  });
+  return habits;
+}
+
+function updateStats(){
+  const cbs = document.querySelectorAll('.habit-cb');
+  const days = state.days;
+  const habitCount = state.habits.length;
+  let totalChecked = 0;
+  let todayChecked = 0;
+  const habitTotals = new Array(habitCount).fill(0);
+
+  cbs.forEach(cb => {
+    if(cb.checked){
+      totalChecked++;
+      const h = parseInt(cb.dataset.habit);
+      const d = parseInt(cb.dataset.day);
+      habitTotals[h] = (habitTotals[h]||0) + 1;
+      if(d === days-1) todayChecked++;
+    }
+  });
+
+  const total = days * habitCount;
+  const pct = total > 0 ? Math.round(totalChecked / total * 100) : 0;
+
+  document.getElementById('stat-today').textContent = todayChecked;
+  document.getElementById('stat-pct').textContent = pct + '%';
+
+  // Best habit
+  let bestIdx = -1, bestVal = -1;
+  habitTotals.forEach((v,i)=>{ if(v>bestVal){bestVal=v;bestIdx=i} });
+  if(bestIdx>=0){
+    const name = state.habits[bestIdx]?.name || '';
+    document.getElementById('stat-best').textContent = name ? `${name} (${bestVal}/${days})` : '—';
+  } else {
+    document.getElementById('stat-best').textContent = '—';
+  }
+}
+
+function saveData(){
+  const days = parseInt(document.getElementById('day-count').value) || 30;
+  const data = {
+    habits: gatherHabitNames(),
+    days: days,
+    monthGreg: document.getElementById('month-greg').value,
+    monthHijri: document.getElementById('month-hijri').value,
+    checks: gatherCheckData()
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  showToast('✅ تم الحفظ');
+}
+
+function autoSave(){
+  try{
+    const days = parseInt(document.getElementById('day-count').value) || 30;
+    const data = {
+      habits: gatherHabitNames(),
+      days: days,
+      monthGreg: document.getElementById('month-greg').value,
+      monthHijri: document.getElementById('month-hijri').value,
+      checks: gatherCheckData()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }catch(e){}
+}
+
+function clearAll(){
+  if(!confirm('مسح جميع البيانات؟')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// Auto-save on month inputs
+document.getElementById('month-greg').addEventListener('input', autoSave);
+document.getElementById('month-hijri').addEventListener('input', autoSave);
+
+// Load saved state on startup
+window.addEventListener('DOMContentLoaded', ()=>{
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const saved = JSON.parse(raw);
+      if(saved.days) document.getElementById('day-count').value = saved.days;
+      if(saved.monthGreg) document.getElementById('month-greg').value = saved.monthGreg;
+      if(saved.monthHijri) document.getElementById('month-hijri').value = saved.monthHijri;
+    }
+  }catch(e){}
+  rebuildTable();
+  updateStats();
+});
+
+// Ctrl+S
+document.addEventListener('keydown', e=>{
+  if((e.ctrlKey||e.metaKey) && e.key==='s'){ e.preventDefault(); saveData(); }
+});
+</script>
+</body>
+</html>

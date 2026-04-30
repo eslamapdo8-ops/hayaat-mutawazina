@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الحياة المتوازنة — المخطط اليومي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --deep-purple:#4A1D6E;--soft-purple:#8B5CF6;--light-purple:#D8B4FE;
+  --pale-lavender:#F3E8FF;--gold-primary:#D4A843;--gold-light:#F5E6B8;
+  --gold-glow:#FFE484;--bg-cream:#FFFAF5;--text-dark:#2D1B3E;
+  --text-gray:#6B5B7B;--card-bg:#FFFFFF;--border-soft:#E8DFF0;
+  --success-green:#22C55E;--star-filled:#D4A843;--star-empty:#E2D4F0;
+  --hour-odd:#FAF7FF;
+}
+body{
+  font-family:'Tajawal',sans-serif;
+  background:linear-gradient(135deg,#F3E8FF 0%,#FFFAF5 50%,#FFF5F0 100%);
+  min-height:100vh;padding:20px;color:var(--text-dark);direction:rtl;
+}
+.page-wrap{
+  max-width:760px;margin:0 auto;
+  box-shadow:0 20px 60px rgba(74,29,110,0.12);border-radius:16px;overflow:hidden;
+  background:linear-gradient(135deg,var(--deep-purple),var(--soft-purple));padding:3px;
+}
+.page{
+  background:var(--card-bg);padding:28px 24px;border-radius:14px;
+  display:flex;flex-direction:column;gap:16px;
+}
+/* ===== HEADER ===== */
+.day-header{
+  background:linear-gradient(135deg,var(--pale-lavender),#FFF0F5);
+  border:1.5px solid var(--border-soft);border-radius:12px;padding:16px 20px;
+}
+.day-header h2{font-size:22px;font-weight:800;color:var(--deep-purple);margin-bottom:6px}
+.day-date-row{display:flex;gap:12px;flex-wrap:wrap}
+.date-field{
+  display:flex;align-items:center;gap:4px;
+  background:white;border:1.5px solid var(--border-soft);border-radius:8px;padding:4px 10px;font-size:13px;
+}
+.date-field .ico{font-size:16px}
+.date-field input{
+  border:none;outline:none;font-family:'Tajawal',sans-serif;font-size:13px;
+  width:110px;background:transparent;color:var(--text-dark);
+}
+/* ===== TOP 3 PRIORITIES ===== */
+.priority-box{
+  background:linear-gradient(135deg,#FFFBEB,#FFF8E7);
+  border:1.5px solid var(--gold-light);border-radius:12px;padding:14px 16px;
+}
+.priority-box h3{font-size:15px;font-weight:700;color:var(--gold-primary);margin-bottom:8px}
+.pri-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.pri-row input[type="text"]{
+  flex:1;border:none;border-bottom:1.5px dashed var(--border-soft);outline:none;
+  font-family:'Tajawal',sans-serif;font-size:14px;padding:4px 0;background:transparent;color:var(--text-dark);
+  transition:border-color .3s;
+}
+.pri-row input[type="text"]:focus{border-bottom-color:var(--gold-primary)}
+/* ===== CHECKBOX ===== */
+.cb-wrap{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;user-select:none}
+.cb-wrap input{display:none}
+.cb-box{
+  width:20px;height:20px;border:2px solid var(--border-soft);border-radius:5px;
+  display:flex;align-items:center;justify-content:center;transition:all .25s;font-size:12px;color:white;background:white;
+}
+.cb-wrap input:checked+.cb-box{background:var(--gold-primary);border-color:var(--gold-primary)}
+.cb-wrap input:checked+.cb-box::after{content:"✓"}
+.priority-box .cb-box{width:22px;height:22px;border-radius:50%;border-color:var(--gold-light)}
+.priority-box .cb-wrap input:checked+.cb-box{background:var(--gold-primary);border-color:var(--gold-primary)}
+/* ===== STAR RATING SMALL ===== */
+.star-rating-sm{display:flex;gap:2px;direction:ltr}
+.star-sm{font-size:16px;cursor:pointer;color:var(--star-empty);transition:color .15s,transform .15s;user-select:none;line-height:1}
+.star-sm:hover{transform:scale(1.2)}
+.star-sm.filled{color:var(--star-filled)}
+/* ===== HOURLY TABLE ===== */
+.hourly-section h3{font-size:15px;font-weight:700;color:var(--deep-purple);margin-bottom:8px}
+.hour-table{display:flex;flex-direction:column;gap:2px}
+.hour-row{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 10px;border-radius:8px;font-size:14px;
+  border:1px solid var(--border-soft);transition:background .2s;
+}
+.hour-row:nth-child(odd){background:var(--hour-odd)}
+.hour-row:hover{background:var(--pale-lavender)}
+.hour-time{
+  font-weight:700;width:80px;color:var(--deep-purple);font-size:13px;
+  flex-shrink:0;text-align:center;
+}
+.hour-task{flex:1}
+.hour-task input[type="text"]{
+  width:100%;border:none;border-bottom:1.5px dashed var(--border-soft);outline:none;
+  font-family:'Tajawal',sans-serif;font-size:13px;padding:3px 0;background:transparent;color:var(--text-dark);
+}
+.hour-done{margin:0 4px}
+.hour-importance{flex-shrink:0}
+/* ===== REFLECTION ===== */
+.reflection-box{
+  background:var(--pale-lavender);border:1.5px solid var(--border-soft);border-radius:12px;padding:14px 16px;
+}
+.reflection-box h3{font-size:15px;font-weight:700;color:var(--deep-purple);margin-bottom:8px}
+.reflection-box textarea{
+  width:100%;min-height:90px;border:1.5px solid var(--border-soft);border-radius:8px;
+  padding:10px;font-family:'Tajawal',sans-serif;font-size:13px;resize:vertical;outline:none;
+  background:#FDFBFF;transition:border-color .3s;
+}
+.reflection-box textarea:focus{border-color:var(--soft-purple)}
+.reflect-mini{display:flex;align-items:center;gap:8px;margin-top:8px}
+.reflect-mini input{
+  flex:1;border:none;border-bottom:1.5px dashed var(--border-soft);outline:none;
+  font-family:'Tajawal',sans-serif;font-size:13px;padding:3px 0;background:transparent;
+}
+.reflect-mini .emoji-lbl{font-size:16px}
+/* ===== FOOTER ===== */
+.footer-actions{display:flex;gap:8px;justify-content:center;padding:8px 0 0}
+.btn{
+  font-family:'Tajawal',sans-serif;padding:8px 20px;border:none;border-radius:8px;
+  cursor:pointer;font-size:13px;font-weight:500;transition:all .25s;
+}
+.btn-primary{background:linear-gradient(135deg,var(--deep-purple),var(--soft-purple));color:white}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(74,29,110,.3)}
+.btn-outline{background:white;color:var(--deep-purple);border:1.5px solid var(--border-soft)}
+.btn-outline:hover{border-color:var(--soft-purple);background:var(--pale-lavender)}
+/* ===== TOAST ===== */
+.toast{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:var(--deep-purple);color:white;padding:10px 24px;border-radius:10px;
+  font-size:14px;opacity:0;transition:all .4s;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ===== PRINT ===== */
+@media print{
+  @page{size:A4 portrait;margin:10mm}
+  body{background:white;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page-wrap{box-shadow:none;padding:1px;border-radius:0;max-width:100%}
+  .page{min-height:auto;padding:16px;border-radius:0;page-break-inside:avoid}
+  .btn,.toast{display:none}
+  .hour-row:hover{background:transparent}
+  .hour-row:nth-child(odd){background:#fafafa!important}
+  input,textarea{background:transparent!important;border-color:#CCC!important}
+  .star-sm:hover{transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="day-header">
+    <h2>🌟 اليوم المثالي</h2>
+    <div class="day-date-row">
+      <div class="date-field"><span class="ico">📆</span><input type="text" id="day-date-greg" placeholder="التاريخ ميلادي: يوم / شهر"></div>
+      <div class="date-field"><span class="ico">🌙</span><input type="text" id="day-date-hijri" placeholder="التاريخ هجري: يوم / شهر"></div>
+      <div class="date-field"><span class="ico">📅</span><input type="text" id="day-name" placeholder="اسم اليوم" style="width:80px"></div>
+    </div>
+  </div>
+
+  <!-- TOP 3 PRIORITIES -->
+  <div class="priority-box">
+    <h3>🎯 أولويات اليوم الكبرى</h3>
+    <div class="pri-row">
+      <label class="cb-wrap"><input type="checkbox"><span class="cb-box"></span></label>
+      <input type="text" class="pri-input" placeholder="الأولوية الأولى...">
+      <div class="star-rating-sm pri-stars" data-target="pri1"></div>
+    </div>
+    <div class="pri-row">
+      <label class="cb-wrap"><input type="checkbox"><span class="cb-box"></span></label>
+      <input type="text" class="pri-input" placeholder="الأولوية الثانية...">
+      <div class="star-rating-sm pri-stars" data-target="pri2"></div>
+    </div>
+    <div class="pri-row">
+      <label class="cb-wrap"><input type="checkbox"><span class="cb-box"></span></label>
+      <input type="text" class="pri-input" placeholder="الأولوية الثالثة...">
+      <div class="star-rating-sm pri-stars" data-target="pri3"></div>
+    </div>
+  </div>
+
+  <!-- HOURLY SCHEDULE -->
+  <div class="hourly-section">
+    <h3>⏰ جدول اليوم</h3>
+    <div class="hour-table" id="hour-table"></div>
+  </div>
+
+  <!-- REFLECTION -->
+  <div class="reflection-box">
+    <h3>🌙 تأمل نهاية اليوم</h3>
+    <textarea id="reflection-text" placeholder="كيف كان يومك؟ ماذا تعلمت؟ ماذا تشعرين؟"></textarea>
+    <div class="reflect-mini"><span class="emoji-lbl">📖</span><input type="text" id="lesson" placeholder="درس اليوم"></div>
+    <div class="reflect-mini" style="margin-top:4px"><span class="emoji-lbl">💧</span><input type="text" id="gratitude" placeholder="شيء واحد ممتنة له اليوم"></div>
+    <div class="reflect-mini"><span class="emoji-lbl">🌡️</span>
+      <span style="font-size:13px;color:var(--text-gray);margin-left:4px;">مزاج اليوم:</span>
+      <div class="star-rating-sm" id="mood-stars"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-actions">
+    <button class="btn btn-primary" onclick="saveData()">💾 حفظ</button>
+    <button class="btn btn-outline" onclick="clearAll()">🔄 تفريغ</button>
+    <button class="btn btn-outline" onclick="window.print()">🖨️ طباعة/PDF</button>
+  </div>
+</div></div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const STORAGE_KEY = 'hayaat_daily_planner';
+
+// ===== HOURS 6:00 → 23:00 (6am - 11pm) =====
+const HOURS = [];
+for(let h=6; h<=23; h++){
+  const label = h < 12 ? `${h}:00 صباحاً` : h === 12 ? `12:00 ظهراً` : `${h-12}:00 ${h>=18?'مساءً':'بعد الظهر'}`;
+  HOURS.push({value:h, label});
+}
+// Add midnight
+HOURS.push({value:0, label:'12:00 منتصف الليل'});
+
+// ===== BUILD HOURLY TABLE =====
+function buildHourTable(){
+  const tbl = document.getElementById('hour-table');
+  tbl.innerHTML = '';
+  HOURS.forEach(h => {
+    const row = document.createElement('div');
+    row.className = 'hour-row';
+    row.innerHTML = `
+      <span class="hour-time">${h.label}</span>
+      <div class="hour-task"><input type="text" class="htask" placeholder="ماذا ستفعلين في هذه الساعة؟"></div>
+      <div class="hour-done"><label class="cb-wrap"><input type="checkbox" class="hdone"><span class="cb-box"></span></label></div>
+      <div class="hour-importance"><div class="star-rating-sm" data-target="h${h.value}"></div></div>
+    `;
+    tbl.appendChild(row);
+  });
+}
+buildHourTable();
+
+// ===== STAR RATING (reusable) =====
+function initStarRating(container){
+  for(let i=1; i<=5; i++){
+    const s = document.createElement('span');
+    s.className = 'star-sm';
+    s.textContent = '★';
+    s.dataset.value = i;
+    s.addEventListener('click', function(){
+      const val = parseInt(this.dataset.value);
+      this.parentElement.querySelectorAll('.star-sm').forEach(s2 => {
+        s2.classList.toggle('filled', parseInt(s2.dataset.value) <= val);
+      });
+      autoSave();
+    });
+    container.appendChild(s);
+  }
+}
+
+// Initialize all star ratings
+document.querySelectorAll('.star-rating-sm').forEach(el => {
+  if(!el.hasChildNodes() || el.children.length===0) initStarRating(el);
+});
+
+// ===== SAVE / LOAD =====
+function gatherData(){
+  const data = {
+    greg: document.getElementById('day-date-greg').value,
+    hijri: document.getElementById('day-date-hijri').value,
+    dayName: document.getElementById('day-name').value,
+    priorities: [],
+    hours: [],
+    reflection: document.getElementById('reflection-text').value,
+    lesson: document.getElementById('lesson').value,
+    gratitude: document.getElementById('gratitude').value,
+    mood: 0
+  };
+
+  // Priorities
+  document.querySelectorAll('.priority-box .pri-row').forEach(row => {
+    data.priorities.push({
+      checked: row.querySelector('input[type="checkbox"]').checked,
+      text: row.querySelector('.pri-input').value,
+      rating: getStarRating(row.querySelector('.pri-stars'))
+    });
+  });
+
+  // Hours
+  document.querySelectorAll('.hour-row').forEach(row => {
+    data.hours.push({
+      text: row.querySelector('.htask').value,
+      done: row.querySelector('.hdone').checked,
+      importance: getStarRating(row.querySelector('.hour-importance .star-rating-sm'))
+    });
+  });
+
+  // Mood
+  data.mood = getStarRating(document.getElementById('mood-stars'));
+
+  return data;
+}
+
+function getStarRating(container){
+  if(!container) return 0;
+  let max = 0;
+  container.querySelectorAll('.star-sm').forEach(s => {
+    if(s.classList.contains('filled')) max = Math.max(max, parseInt(s.dataset.value));
+  });
+  return max;
+}
+
+function setStarRating(container, val){
+  if(!container) return;
+  container.querySelectorAll('.star-sm').forEach(s => {
+    s.classList.toggle('filled', parseInt(s.dataset.value) <= val);
+  });
+}
+
+function applyData(data){
+  if(!data) return;
+  document.getElementById('day-date-greg').value = data.greg || '';
+  document.getElementById('day-date-hijri').value = data.hijri || '';
+  document.getElementById('day-name').value = data.dayName || '';
+
+  // Priorities
+  const priRows = document.querySelectorAll('.priority-box .pri-row');
+  if(data.priorities){
+    data.priorities.forEach((p,i)=>{
+      if(priRows[i]){
+        priRows[i].querySelector('input[type="checkbox"]').checked = p.checked;
+        priRows[i].querySelector('.pri-input').value = p.text;
+        if(p.rating) setStarRating(priRows[i].querySelector('.pri-stars'), p.rating);
+      }
+    });
+  }
+
+  // Hours
+  const hourRows = document.querySelectorAll('.hour-row');
+  if(data.hours){
+    data.hours.forEach((h,i)=>{
+      if(hourRows[i]){
+        hourRows[i].querySelector('.htask').value = h.text || '';
+        hourRows[i].querySelector('.hdone').checked = !!h.done;
+        if(h.importance) setStarRating(hourRows[i].querySelector('.hour-importance .star-rating-sm'), h.importance);
+      }
+    });
+  }
+
+  document.getElementById('reflection-text').value = data.reflection || '';
+  document.getElementById('lesson').value = data.lesson || '';
+  document.getElementById('gratitude').value = data.gratitude || '';
+  if(data.mood) setStarRating(document.getElementById('mood-stars'), data.mood);
+}
+
+function saveData(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(gatherData()));
+  showToast('✅ تم الحفظ');
+}
+
+function clearAll(){
+  if(!confirm('مسح كل البيانات؟')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+function autoSave(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(gatherData())); }catch(e){}
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// Auto-save on input/change
+document.querySelectorAll('input,textarea').forEach(el => {
+  el.addEventListener('input', autoSave);
+  if(el.type==='checkbox') el.addEventListener('change', autoSave);
+});
+
+// Load
+window.addEventListener('DOMContentLoaded', ()=>{
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) applyData(JSON.parse(raw));
+  }catch(e){}
+});
+
+// Ctrl+S
+document.addEventListener('keydown', e=>{
+  if((e.ctrlKey||e.metaKey) && e.key==='s'){ e.preventDefault(); saveData(); }
+});
+</script>
+</body>
+</html>

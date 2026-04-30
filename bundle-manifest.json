@@ -1,0 +1,35 @@
+{
+  "name": "الحياة المتوازنة — الباقة الكاملة",
+  "version": "1.0.0 (MVP)",
+  "files": [
+    {
+      "title": "🗓️ مخطط الأسبوع (Two-Page Spread)",
+      "file": "weekly-spread.html",
+      "pages_est": "2 صفحات A4",
+      "description": "قلب المنتج — تخطيط أسبوعي كامل بتقويم هجري/ميلادي مزدوج"
+    },
+    {
+      "title": "🌟 المخطط اليومي (صفحة اليوم المثالي)",
+      "file": "daily-planner.html",
+      "pages_est": "1 صفحة A4",
+      "description": "تقسيم اليوم من 6ص-12م مع أولويات وتأمل"
+    },
+    {
+      "title": "📊 متعقب العادات الشهري",
+      "file": "habit-tracker.html",
+      "pages_est": "1-2 صفحات A4 (لاندسكيب)",
+      "description": "6 عادات قابلة للتخصيص × 30/31 يوم مع إحصائيات"
+    },
+    {
+      "title": "📔 كتاب الملصقات (Sticker Book)",
+      "file": "sticker-book.html",
+      "pages_est": "1-2 صفحات A4",
+      "description": "47 ملصقاً رقمياً — قابلة للنسخ والطباعة والقص"
+    }
+  ],
+  "stats": {
+    "total_lines": 2045,
+    "total_bytes": 69019,
+    "file_count": 4
+  }
+}

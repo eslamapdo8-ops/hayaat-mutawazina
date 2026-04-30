@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الحياة المتوازنة — مخطط الأسبوع</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --deep-purple: #4A1D6E;
+  --soft-purple: #8B5CF6;
+  --light-purple: #D8B4FE;
+  --pale-lavender: #F3E8FF;
+  --gold-primary: #D4A843;
+  --gold-light: #F5E6B8;
+  --gold-glow: #FFE484;
+  --bg-cream: #FFFAF5;
+  --text-dark: #2D1B3E;
+  --text-gray: #6B5B7B;
+  --card-bg: #FFFFFF;
+  --border-soft: #E8DFF0;
+  --success-green: #22C55E;
+  --star-filled: #D4A843;
+  --star-empty: #E2D4F0;
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: linear-gradient(135deg, #F3E8FF 0%, #FFFAF5 50%, #FFF5F0 100%);
+  min-height: 100vh;
+  padding: 20px;
+  color: var(--text-dark);
+  direction: rtl;
+}
+
+/* ---- Spread Container ---- */
+.spread {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 2px;
+  box-shadow: 0 20px 60px rgba(74, 29, 110, 0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--deep-purple), var(--soft-purple));
+  padding: 3px;
+}
+
+.page {
+  flex: 1;
+  background: var(--card-bg);
+  padding: 28px 24px;
+  min-height: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.page-left {
+  border-radius: 14px 0 0 14px;
+}
+
+.page-right {
+  border-radius: 0 14px 14px 0;
+}
+
+/* ---- Header / Week Info ---- */
+.week-header {
+  background: linear-gradient(135deg, var(--pale-lavender), #FFF0F5);
+  border: 1.5px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.week-header h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--deep-purple);
+  margin-bottom: 4px;
+}
+
+.week-dates {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.date-input-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: white;
+  border: 1.5px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 13px;
+}
+
+.date-input-group .icon { font-size: 16px; }
+.date-input-group input[type="text"] {
+  border: none;
+  outline: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  width: 100px;
+  background: transparent;
+  color: var(--text-dark);
+}
+
+/* ---- Priorities ---- */
+.top-priorities {
+  background: linear-gradient(135deg, #FFFBEB, #FFF8E7);
+  border: 1.5px solid var(--gold-light);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.top-priorities h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold-primary);
+  margin-bottom: 8px;
+}
+
+.priority-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.priority-item input[type="text"] {
+  flex: 1;
+  border: none;
+  border-bottom: 1.5px dashed var(--border-soft);
+  outline: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  padding: 4px 0;
+  background: transparent;
+  color: var(--text-dark);
+  transition: border-color 0.3s;
+}
+
+.priority-item input[type="text"]:focus { border-bottom-color: var(--gold-primary); }
+
+/* ---- Custom Checkbox ---- */
+.cb-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cb-container input { display: none; }
+
+.cb-check {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-soft);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+  font-size: 12px;
+  color: white;
+  background: white;
+}
+
+.cb-container input:checked + .cb-check {
+  background: var(--gold-primary);
+  border-color: var(--gold-primary);
+}
+
+.cb-container input:checked + .cb-check::after { content: "✓"; }
+
+.priority-item .cb-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border-color: var(--gold-light);
+}
+
+.priority-item .cb-container input:checked + .cb-check {
+  background: var(--gold-primary);
+  border-color: var(--gold-primary);
+}
+
+/* ---- Days Table ---- */
+.days-table { flex: 1; }
+
+.days-table h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--deep-purple);
+  margin-bottom: 8px;
+}
+
+.day-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--border-soft);
+  transition: background 0.2s;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.day-row:hover { background: var(--pale-lavender); }
+
+.day-name {
+  font-weight: 700;
+  width: 52px;
+  color: var(--deep-purple);
+}
+
+.day-date {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.day-date input {
+  width: 28px;
+  border: none;
+  border-bottom: 1px solid var(--border-soft);
+  outline: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 12px;
+  text-align: center;
+  background: transparent;
+}
+
+.day-date .sep { color: var(--text-gray); font-size: 11px; }
+
+.day-icons {
+  display: flex;
+  gap: 3px;
+  margin-right: auto;
+}
+
+.icon-btn {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+}
+
+.icon-btn:hover { opacity: 1; background: var(--pale-lavender); }
+.icon-btn.active { opacity: 1; }
+
+.icon-btn.coffee.active { background: #EFD6C0; }
+.icon-btn.appt.active { background: #C7E4F0; }
+.icon-btn.star-icon.active { background: var(--gold-light); }
+.icon-btn.task-icon.active { background: #D8F0D0; }
+
+/* ---- Quick Tasks ---- */
+.quick-tasks {
+  background: var(--pale-lavender);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.quick-tasks h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--deep-purple);
+  margin-bottom: 6px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.task-item input[type="text"] {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid var(--border-soft);
+  outline: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  padding: 3px 0;
+  background: transparent;
+}
+
+/* ========== RIGHT PAGE ========== */
+
+.section-card {
+  background: white;
+  border: 1.5px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.section-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--deep-purple);
+  margin-bottom: 10px;
+}
+
+/* ---- Achievements with Star Rating ---- */
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border-soft);
+}
+
+.achievement-item input[type="text"] {
+  flex: 1;
+  border: none;
+  border-bottom: 1.5px dashed var(--border-soft);
+  outline: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  padding: 3px 0;
+  background: transparent;
+}
+
+.star-rating {
+  display: flex;
+  gap: 3px;
+  direction: ltr; /* stars fill left-to-right visually */
+}
+
+.star {
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--star-empty);
+  transition: color 0.15s, transform 0.15s;
+  user-select: none;
+  line-height: 1;
+}
+
+.star:hover { transform: scale(1.2); }
+.star.filled { color: var(--star-filled); }
+
+/* ---- Reflection Box ---- */
+.reflection-box textarea {
+  width: 100%;
+  min-height: 80px;
+  border: 1.5px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 10px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  resize: vertical;
+  outline: none;
+  background: #FDFBFF;
+  transition: border-color 0.3s;
+}
+
+.reflection-box textarea:focus { border-color: var(--soft-purple); }
+
+.little-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.little-input-row input {
+  flex: 1;
+  border: none;
+  border-bottom: 1.5px dashed var(--border-soft);
+  outline: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  padding: 3px 0;
+  background: transparent;
+}
+
+.little-input-row .emoji-label { font-size: 16px; }
+
+/* ---- Next Week ---- */
+.next-week-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.next-priority-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.next-priority-row input[type="text"] {
+  flex: 1;
+  border: none;
+  border-bottom: 1.5px dashed var(--border-soft);
+  outline: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  padding: 3px 0;
+  background: transparent;
+}
+
+.next-appt-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.next-appt-row input[type="text"] {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid var(--border-soft);
+  outline: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  padding: 2px 0;
+  background: transparent;
+}
+
+/* ---- Footer Actions ---- */
+.footer-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding: 16px 0 0;
+}
+
+.btn {
+  font-family: 'Tajawal', sans-serif;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.25s;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--deep-purple), var(--soft-purple));
+  color: white;
+}
+
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(74, 29, 110, 0.3); }
+
+.btn-outline {
+  background: white;
+  color: var(--deep-purple);
+  border: 1.5px solid var(--border-soft);
+}
+
+.btn-outline:hover { border-color: var(--soft-purple); background: var(--pale-lavender); }
+
+/* ---- Status Toast ---- */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--deep-purple);
+  color: white;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  opacity: 0;
+  transition: all 0.4s;
+  z-index: 999;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ========== PRINT ========== */
+@media print {
+  @page { size: A4 landscape; margin: 10mm; }
+
+  body {
+    background: white;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .spread {
+    box-shadow: none;
+    gap: 1px;
+    padding: 1px;
+    border-radius: 0;
+    max-width: 100%;
+  }
+
+  .page {
+    min-height: auto;
+    padding: 16px;
+    border-radius: 0;
+    page-break-inside: avoid;
+  }
+
+  .day-row:hover { background: transparent; }
+  .star:hover { transform: none; }
+  .btn { display: none; }
+  .toast { display: none; }
+
+  .section-card, .top-priorities, .week-header, .quick-tasks {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  input, textarea {
+    background: transparent !important;
+    border-color: #CCC !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="spread">
+
+  <!-- ====== LEFT PAGE ====== -->
+  <div class="page page-left">
+
+    <div class="week-header">
+      <h2>📅 الأسبوع رقم: <input type="text" id="week-number" placeholder="___" style="width:60px;border:none;border-bottom:2px solid var(--deep-purple);outline:none;font-family:'Tajawal',sans-serif;font-size:20px;font-weight:800;color:var(--deep-purple);background:transparent;"></h2>
+      <div class="week-dates">
+        <div class="date-input-group"><span class="icon">📆</span><input type="text" id="from-greg" placeholder="من: يوم/شهر"></div>
+        <span style="color:var(--text-gray);font-size:12px;">→</span>
+        <div class="date-input-group"><span class="icon">📆</span><input type="text" id="to-greg" placeholder="إلى: يوم/شهر"></div>
+        <span style="color:var(--text-gray);font-size:12px;margin:0 2px;">|</span>
+        <div class="date-input-group"><span class="icon">🌙</span><input type="text" id="from-hijri" placeholder="من: يوم/شهر"></div>
+        <span style="color:var(--text-gray);font-size:12px;">→</span>
+        <div class="date-input-group"><span class="icon">🌙</span><input type="text" id="to-hijri" placeholder="إلى: يوم/شهر"></div>
+      </div>
+    </div>
+
+    <div class="top-priorities">
+      <h3>⭐ أولويات الأسبوع الكبرى</h3>
+      <div class="priority-item">
+        <label class="cb-container"><input type="checkbox"><span class="cb-check"></span></label>
+        <input type="text" placeholder="الأولوية الأولى...">
+      </div>
+      <div class="priority-item">
+        <label class="cb-container"><input type="checkbox"><span class="cb-check"></span></label>
+        <input type="text" placeholder="الأولوية الثانية...">
+      </div>
+      <div class="priority-item">
+        <label class="cb-container"><input type="checkbox"><span class="cb-check"></span></label>
+        <input type="text" placeholder="الأولوية الثالثة...">
+      </div>
+    </div>
+
+    <div class="days-table">
+      <h3>🗓️ أيام الأسبوع</h3>
+      <div id="days-container"></div>
+    </div>
+
+    <div class="quick-tasks">
+      <h3>📝 مهام الأسبوع</h3>
+      <div id="quick-tasks-container"></div>
+    </div>
+  </div>
+
+  <!-- ====== RIGHT PAGE ====== -->
+  <div class="page page-right">
+
+    <div class="section-card">
+      <h3>🚀 أهم إنجازات الأسبوع</h3>
+      <div id="achievements-container"></div>
+    </div>
+
+    <div class="section-card reflection-box" style="flex:1;">
+      <h3>💭 تأملات الأسبوع</h3>
+      <textarea id="reflection-text" placeholder="اكتبي تأملاتك... ماذا شعرت؟ ماذا تعلمت؟"></textarea>
+      <div class="little-input-row">
+        <span class="emoji-label">📖</span>
+        <input type="text" id="lesson-learned" placeholder="درس تعلمته هذا الأسبوع">
+      </div>
+      <div class="little-input-row">
+        <span class="emoji-label">💧</span>
+        <input type="text" id="gratitude" placeholder="شكر / امتنان">
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h3>🔮 نظرة على الأسبوع القادم</h3>
+      <div class="next-week-grid">
+        <div><input type="text" id="next-week-num" placeholder="الأسبوع رقم: ___" style="border:none;border-bottom:1.5px dashed var(--border-soft);outline:none;font-family:'Tajawal',sans-serif;font-size:14px;padding:2px 0;width:160px;background:transparent;"></div>
+        <div class="next-priority-row"><label class="cb-container"><input type="checkbox"><span class="cb-check"></span></label><input type="text" placeholder="أولوية أولى للأسبوع القادم"></div>
+        <div class="next-priority-row"><label class="cb-container"><input type="checkbox"><span class="cb-check"></span></label><input type="text" placeholder="أولوية ثانية"></div>
+        <div class="next-priority-row"><label class="cb-container"><input type="checkbox"><span class="cb-check"></span></label><input type="text" placeholder="أولوية ثالثة"></div>
+        <div style="margin-top:4px;"><span style="font-size:13px;color:var(--text-gray);">📌 مواعيد مهمة:</span></div>
+        <div class="next-appt-row"><label class="cb-container"><input type="checkbox"><span class="cb-check"></span></label><input type="text" placeholder="موعد ١"></div>
+        <div class="next-appt-row"><label class="cb-container"><input type="checkbox"><span class="cb-check"></span></label><input type="text" placeholder="موعد ٢"></div>
+        <div class="little-input-row" style="margin-top:4px;">
+          <span class="emoji-label">🤲</span>
+          <input type="text" id="next-dua" placeholder="دعاء الأسبوع القادم">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-actions">
+  <button class="btn btn-primary" onclick="saveData()">💾 حفظ التقدم</button>
+  <button class="btn btn-outline" onclick="clearAll()">🔄 تفريغ الكل</button>
+  <button class="btn btn-outline" onclick="window.print()">🖨️ طباعة / PDF</button>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// ====== DAYS OF WEEK (Arabic start: Saturday) ======
+const DAYS = ['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'];
+
+function buildDayRow(dayName, idx) {
+  const row = document.createElement('div');
+  row.className = 'day-row';
+  row.innerHTML = `
+    <span class="day-name">${dayName}</span>
+    <div class="day-date">
+      <input type="text" class="d-greg" placeholder="يوم" maxlength="2">
+      <span class="sep">/</span>
+      <input type="text" class="m-greg" placeholder="شهر" maxlength="2">
+      <span class="sep">|</span>
+      <input type="text" class="d-hijri" placeholder="هـ" maxlength="2">
+      <span class="sep">/</span>
+      <input type="text" class="m-hijri" placeholder="شهر" maxlength="2">
+    </div>
+    <div class="day-icons">
+      <button class="icon-btn coffee" title="قهوة/استراحة" data-key="coffee">☕</button>
+      <button class="icon-btn appt" title="موعد" data-key="appt">📅</button>
+      <button class="icon-btn star-icon" title="إنجاز" data-key="star">⭐</button>
+      <button class="icon-btn task-icon" title="مهمة كبيرة" data-key="task">📌</button>
+    </div>
+  `;
+
+  // Toggle icon buttons
+  row.querySelectorAll('.icon-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      this.classList.toggle('active');
+      autoSave();
+    });
+  });
+
+  // Auto-save on date input change
+  row.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('input', autoSave);
+  });
+
+  return row;
+}
+
+function buildDays() {
+  const container = document.getElementById('days-container');
+  container.innerHTML = '';
+  DAYS.forEach((name, i) => {
+    container.appendChild(buildDayRow(name, i));
+  });
+}
+buildDays();
+
+// ====== QUICK TASKS ======
+function buildQuickTasks(count = 6) {
+  const container = document.getElementById('quick-tasks-container');
+  container.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const div = document.createElement('div');
+    div.className = 'task-item';
+    div.innerHTML = `
+      <label class="cb-container"><input type="checkbox"><span class="cb-check"></span></label>
+      <input type="text" placeholder="مهمة...">
+    `;
+    div.querySelector('input[type="text"]').addEventListener('input', autoSave);
+    div.querySelector('input[type="checkbox"]').addEventListener('change', autoSave);
+    container.appendChild(div);
+  }
+}
+buildQuickTasks();
+
+// ====== STAR RATING ======
+function createStarRating(container) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'star-rating';
+  for (let i = 1; i <= 5; i++) {
+    const span = document.createElement('span');
+    span.className = 'star';
+    span.textContent = '★';
+    span.dataset.value = i;
+    span.addEventListener('click', function() {
+      const val = parseInt(this.dataset.value);
+      const siblings = this.parentElement.querySelectorAll('.star');
+      siblings.forEach(s => {
+        s.classList.toggle('filled', parseInt(s.dataset.value) <= val);
+      });
+      autoSave();
+    });
+    wrapper.appendChild(span);
+  }
+  container.appendChild(wrapper);
+  return wrapper;
+}
+
+// ====== ACHIEVEMENTS ======
+function buildAchievements(count = 3) {
+  const container = document.getElementById('achievements-container');
+  container.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const div = document.createElement('div');
+    div.className = 'achievement-item';
+    const txt = document.createElement('input');
+    txt.type = 'text';
+    txt.placeholder = '🌟 إنجاز ' + (i + 1) + '...';
+    txt.addEventListener('input', autoSave);
+    div.appendChild(txt);
+    const stars = document.createElement('div');
+    stars.className = 'star-rating-wrap';
+    createStarRating(stars);
+    div.appendChild(stars);
+    container.appendChild(div);
+  }
+}
+buildAchievements();
+
+// ====== SAVE / LOAD ======
+const STORAGE_KEY = 'hayaat_weekly_spread';
+
+function gatherData() {
+  const data = {
+    weekNumber: document.getElementById('week-number').value,
+    fromGreg: document.getElementById('from-greg').value,
+    toGreg: document.getElementById('to-greg').value,
+    fromHijri: document.getElementById('from-hijri').value,
+    toHijri: document.getElementById('to-hijri').value,
+    priorities: [],
+    days: [],
+    quickTasks: [],
+    achievements: [],
+    reflection: document.getElementById('reflection-text').value,
+    lesson: document.getElementById('lesson-learned').value,
+    gratitude: document.getElementById('gratitude').value,
+    nextWeekNum: document.getElementById('next-week-num').value,
+    nextPriorities: [],
+    nextAppointments: [],
+    nextDua: document.getElementById('next-dua').value
+  };
+
+  // Priorities
+  document.querySelectorAll('.top-priorities .priority-item').forEach(item => {
+    const cb = item.querySelector('input[type="checkbox"]').checked;
+    const txt = item.querySelector('input[type="text"]').value;
+    data.priorities.push({ checked: cb, text: txt });
+  });
+
+  // Days
+  document.querySelectorAll('.day-row').forEach(row => {
+    data.days.push({
+      gregD: row.querySelector('.d-greg').value,
+      gregM: row.querySelector('.m-greg').value,
+      hijriD: row.querySelector('.d-hijri').value,
+      hijriM: row.querySelector('.m-hijri').value,
+      coffee: row.querySelector('.coffee')?.classList.contains('active') || false,
+      appt: row.querySelector('.appt')?.classList.contains('active') || false,
+      star: row.querySelector('.star-icon')?.classList.contains('active') || false,
+      task: row.querySelector('.task-icon')?.classList.contains('active') || false
+    });
+  });
+
+  // Quick tasks
+  document.querySelectorAll('.quick-tasks .task-item').forEach(item => {
+    data.quickTasks.push({
+      checked: item.querySelector('input[type="checkbox"]').checked,
+      text: item.querySelector('input[type="text"]').value
+    });
+  });
+
+  // Achievements with star ratings
+  document.querySelectorAll('.achievement-item').forEach(item => {
+    const txt = item.querySelector('input[type="text"]').value;
+    const rating = item.querySelector('.star-rating');
+    let value = 0;
+    if (rating) {
+      rating.querySelectorAll('.star').forEach(s => {
+        if (s.classList.contains('filled')) value = Math.max(value, parseInt(s.dataset.value));
+      });
+    }
+    data.achievements.push({ text: txt, rating: value });
+  });
+
+  // Next week priorities
+  document.querySelectorAll('.next-week-grid .next-priority-row').forEach(item => {
+    const cb = item.querySelector('input[type="checkbox"]').checked;
+    const txt = item.querySelector('input[type="text"]').value;
+    data.nextPriorities.push({ checked: cb, text: txt });
+  });
+
+  // Next week appointments
+  document.querySelectorAll('.next-week-grid .next-appt-row').forEach(item => {
+    const cb = item.querySelector('input[type="checkbox"]').checked;
+    const txt = item.querySelector('input[type="text"]').value;
+    data.nextAppointments.push({ checked: cb, text: txt });
+  });
+
+  return data;
+}
+
+function applyData(data) {
+  if (!data) return;
+  document.getElementById('week-number').value = data.weekNumber || '';
+  document.getElementById('from-greg').value = data.fromGreg || '';
+  document.getElementById('to-greg').value = data.toGreg || '';
+  document.getElementById('from-hijri').value = data.fromHijri || '';
+  document.getElementById('to-hijri').value = data.toHijri || '';
+
+  // Priorities
+  if (data.priorities) {
+    const items = document.querySelectorAll('.top-priorities .priority-item');
+    data.priorities.forEach((p, i) => {
+      if (items[i]) {
+        items[i].querySelector('input[type="checkbox"]').checked = p.checked;
+        items[i].querySelector('input[type="text"]').value = p.text;
+      }
+    });
+  }
+
+  // Days
+  if (data.days) {
+    const rows = document.querySelectorAll('.day-row');
+    data.days.forEach((d, i) => {
+      if (!rows[i]) return;
+      rows[i].querySelector('.d-greg').value = d.gregD || '';
+      rows[i].querySelector('.m-greg').value = d.gregM || '';
+      rows[i].querySelector('.d-hijri').value = d.hijriD || '';
+      rows[i].querySelector('.m-hijri').value = d.hijriM || '';
+      rows[i].querySelector('.coffee')?.classList.toggle('active', !!d.coffee);
+      rows[i].querySelector('.appt')?.classList.toggle('active', !!d.appt);
+      rows[i].querySelector('.star-icon')?.classList.toggle('active', !!d.star);
+      rows[i].querySelector('.task-icon')?.classList.toggle('active', !!d.task);
+    });
+  }
+
+  // Quick tasks
+  if (data.quickTasks) {
+    const items = document.querySelectorAll('.quick-tasks .task-item');
+    data.quickTasks.forEach((t, i) => {
+      if (items[i]) {
+        items[i].querySelector('input[type="checkbox"]').checked = t.checked;
+        items[i].querySelector('input[type="text"]').value = t.text;
+      }
+    });
+  }
+
+  // Achievements
+  if (data.achievements) {
+    const items = document.querySelectorAll('.achievement-item');
+    data.achievements.forEach((a, i) => {
+      if (!items[i]) return;
+      items[i].querySelector('input[type="text"]').value = a.text || '';
+      const stars = items[i].querySelectorAll('.star');
+      stars.forEach(s => {
+        s.classList.toggle('filled', parseInt(s.dataset.value) <= (a.rating || 0));
+      });
+    });
+  }
+
+  document.getElementById('reflection-text').value = data.reflection || '';
+  document.getElementById('lesson-learned').value = data.lesson || '';
+  document.getElementById('gratitude').value = data.gratitude || '';
+  document.getElementById('next-week-num').value = data.nextWeekNum || '';
+  document.getElementById('next-dua').value = data.nextDua || '';
+
+  // Next week priorities
+  if (data.nextPriorities) {
+    const items = document.querySelectorAll('.next-week-grid .next-priority-row');
+    data.nextPriorities.forEach((p, i) => {
+      if (items[i]) {
+        items[i].querySelector('input[type="checkbox"]').checked = p.checked;
+        items[i].querySelector('input[type="text"]').value = p.text;
+      }
+    });
+  }
+
+  // Next week appointments
+  if (data.nextAppointments) {
+    const items = document.querySelectorAll('.next-week-grid .next-appt-row');
+    data.nextAppointments.forEach((a, i) => {
+      if (items[i]) {
+        items[i].querySelector('input[type="checkbox"]').checked = a.checked;
+        items[i].querySelector('input[type="text"]').value = a.text;
+      }
+    });
+  }
+}
+
+function saveData() {
+  const data = gatherData();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  showToast('✅ تم الحفظ في المتصفح');
+}
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) applyData(JSON.parse(raw));
+  } catch(e) { console.warn('Load error:', e); }
+}
+
+function clearAll() {
+  if (!confirm('هل أنت متأكدة؟ سيتم مسح كل البيانات المدخلة.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+function autoSave() {
+  try {
+    const data = gatherData();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch(e) { /* silent auto-save */ }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Load on init
+window.addEventListener('DOMContentLoaded', loadData);
+
+// Keyboard shortcut: Ctrl+S to save
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    e.preventDefault();
+    saveData();
+  }
+});
+</script>
+
+</body>
+</html>
