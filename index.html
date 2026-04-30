@@ -1183,8 +1183,7 @@ document.addEventListener('click', (e)=>{
 
 let activeTab=localStorage.getItem('hayaat_tab')||'weekly';
 document.querySelectorAll('.nav-item').forEach(item=>{
-  item.addEventListener('click',function(){closeSidebar();
-    const tab=this.dataset.tab;if(tab===activeTab)return;
+  item.addEventListener('click',function(){closeSidebar();var tab=this.dataset.tab;if(tab===activeTab)return;
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
     this.classList.add('active');activeTab=tab;
     localStorage.setItem('hayaat_tab',tab);showTab(tab);
